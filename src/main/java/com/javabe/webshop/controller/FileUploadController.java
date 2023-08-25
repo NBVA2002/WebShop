@@ -1,5 +1,7 @@
 package com.javabe.webshop.controller;
 
+import com.javabe.webshop.entity.ImageEntity;
+import com.javabe.webshop.service.ImageService;
 import com.javabe.webshop.service.ImageStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,17 @@ public class FileUploadController {
     @Autowired
     private ImageStorageService imageStorageService;
 
+    @Autowired
+    private ImageService imageService;
+
     @PostMapping("/upload")
-    public String addEvaluate(@RequestParam("file")MultipartFile file) {
+    public String addFile(@RequestParam("file")MultipartFile file,@RequestParam("pid") Long idProduct) {
         try {
             String generateFileName = imageStorageService.storeFile(file);
-            return "Upload file successfully";
+            ImageEntity imageEntity = new ImageEntity();
+            imageEntity.setImgURL(generateFileName);
+            imageService.addImage(idProduct, imageEntity);
+            return generateFileName;
         } catch (Exception e) {
             throw new RuntimeException();
         }

@@ -18,7 +18,7 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    @Async
+//    @Async
 //    public String sendMail(MultipartFile[] file, String to, String[] cc, String subject, String body) {
     public String sendMail(String to, String subject, String body) {
         try {

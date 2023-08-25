@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 19, 2023 lúc 04:18 AM
--- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 8.0.10
+-- Thời gian đã tạo: Th8 23, 2023 lúc 04:03 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `test`
+-- Cơ sở dữ liệu: `web_shop`
 --
 
 -- --------------------------------------------------------
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `address` (
   `id` int(11) NOT NULL,
-  `city` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `address`
@@ -48,6 +48,66 @@ INSERT INTO `address` (`id`, `city`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `cartegory`
+--
+
+CREATE TABLE `cartegory` (
+  `id` bigint(11) NOT NULL,
+  `cartegory_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `cartegory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cartegory`
+--
+
+INSERT INTO `cartegory` (`id`, `cartegory_type`, `cartegory_name`) VALUES
+(1, 'Áo', 'Áo hoodie'),
+(2, 'Áo', 'Áo khoác'),
+(3, 'Áo', 'Áo len'),
+(4, 'Áo', 'Áo polo'),
+(5, 'Áo', 'Áo sơ mi'),
+(6, 'Áo', 'Áo sweater'),
+(7, 'Áo', 'Áo thun'),
+(8, 'Áo', 'Áo vest'),
+(9, 'Quần', 'Quần Jeans'),
+(15, 'Quần', 'Quần kaki'),
+(16, 'Quần', 'Quần nỉ'),
+(17, 'Quần', 'Quần vải'),
+(18, 'Quần', 'Quần lửng'),
+(19, 'Quần', 'Quần short'),
+(20, 'Váy', 'Chân váy'),
+(21, 'Phụ kiện', 'Đầm'),
+(22, 'Phụ kiện', 'Nón - Băng đô'),
+(23, 'Phụ kiện', 'Túi - Ví'),
+(24, 'Phụ kiện', 'Thắt Lưng'),
+(25, 'Phụ kiện', 'Vớ - Tất'),
+(26, 'Phụ kiện', 'Giày - Dép');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `cartegory_type`
+--
+
+CREATE TABLE `cartegory_type` (
+  `id` bigint(11) NOT NULL,
+  `cartegory_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cartegory_type`
+--
+
+INSERT INTO `cartegory_type` (`id`, `cartegory_type`) VALUES
+(1, 'Áo'),
+(4, 'Phụ kiện'),
+(2, 'Quần'),
+(3, 'Váy');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `cart_item`
 --
 
@@ -57,7 +117,7 @@ CREATE TABLE `cart_item` (
   `size` varchar(10) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `oid` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `cart_item`
@@ -136,7 +196,9 @@ INSERT INTO `cart_item` (`id`, `pid`, `size`, `quantity`, `oid`) VALUES
 (70, 28, 'XS', 2, 50),
 (71, 28, 'L', 3, 50),
 (72, 28, 'S', 4, 50),
-(73, 28, 'M', 9, 50);
+(73, 28, 'M', 9, 50),
+(74, 68, 'L', 1, 51),
+(75, 64, 'S', 2, 51);
 
 -- --------------------------------------------------------
 
@@ -147,10 +209,10 @@ INSERT INTO `cart_item` (`id`, `pid`, `size`, `quantity`, `oid`) VALUES
 CREATE TABLE `evaluate` (
   `id` int(11) NOT NULL,
   `rate` double NOT NULL,
-  `comment` text CHARACTER SET utf8 NOT NULL,
+  `comment` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `pid` bigint(11) NOT NULL,
   `uid` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `evaluate`
@@ -170,9 +232,9 @@ INSERT INTO `evaluate` (`id`, `rate`, `comment`, `pid`, `uid`) VALUES
 
 CREATE TABLE `img_product` (
   `id` bigint(11) NOT NULL,
-  `img_url` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `img_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `pid` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `img_product`
@@ -445,7 +507,7 @@ CREATE TABLE `list_order` (
   `id_order` int(11) NOT NULL,
   `name_buyer` varchar(20) NOT NULL,
   `product` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`product`))
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `list_order`
@@ -1467,63 +1529,64 @@ CREATE TABLE `order_list` (
   `user_info` bigint(20) NOT NULL,
   `total_price` decimal(11,2) DEFAULT NULL,
   `has_process` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order_list`
 --
 
 INSERT INTO `order_list` (`id`, `user_info`, `total_price`, `has_process`) VALUES
-(1, 6, '4647000.00', 0),
-(2, 6, '0.00', 0),
-(3, 6, '0.00', 0),
-(4, 6, '0.00', 0),
-(5, 2, '0.00', 0),
-(6, 2, '0.00', 0),
-(7, 2, '0.00', 0),
-(8, 2, '0.00', 0),
-(9, 2, '0.00', 0),
-(10, 2, '0.00', 0),
-(11, 2, '0.00', 0),
-(12, 2, '0.00', 0),
-(13, 2, '0.00', 0),
-(14, 2, '0.00', 0),
-(15, 2, '0.00', 0),
-(16, 2, '0.00', 0),
-(17, 2, '0.00', 0),
-(18, 2, '0.00', 0),
-(19, 2, '0.00', 0),
-(20, 2, '0.00', 0),
-(21, 2, '0.00', 0),
-(22, 2, '0.00', 0),
-(23, 2, '0.00', 0),
-(24, 2, '3640000.00', 0),
-(25, 2, '3640000.00', 0),
-(26, 2, '745000.00', 0),
-(27, 2, '745000.00', 0),
-(28, 2, '745000.00', 0),
-(29, 2, '745000.00', 0),
-(30, 2, '1490000.00', 0),
-(31, 2, '1490000.00', 0),
-(32, 2, '1665000.00', 0),
-(33, 2, '807000.00', 0),
-(34, 2, '807000.00', 0),
-(35, 2, '1734000.00', 0),
-(36, 2, '1490000.00', 0),
-(37, 2, '598000.00', 0),
-(38, 2, '449000.00', 0),
-(39, 2, '898000.00', 0),
-(40, 2, '990000.00', 0),
-(41, 2, '898000.00', 0),
-(42, 2, '1439000.00', 0),
-(43, 2, '30111000.00', 0),
-(44, 2, '60222000.00', 0),
-(45, 2, '2970000.00', 0),
-(46, 2, '2475000.00', 0),
-(47, 2, '2337000.00', 0),
-(48, 2, '5274000.00', 0),
-(49, 2, '5418000.00', 0),
-(50, 2, '9810000.00', 0);
+(1, 6, 4647000.00, 0),
+(2, 6, 0.00, 0),
+(3, 6, 0.00, 0),
+(4, 6, 0.00, 0),
+(5, 2, 0.00, 0),
+(6, 2, 0.00, 0),
+(7, 2, 0.00, 0),
+(8, 2, 0.00, 0),
+(9, 2, 0.00, 0),
+(10, 2, 0.00, 0),
+(11, 2, 0.00, 0),
+(12, 2, 0.00, 0),
+(13, 2, 0.00, 0),
+(14, 2, 0.00, 0),
+(15, 2, 0.00, 0),
+(16, 2, 0.00, 0),
+(17, 2, 0.00, 0),
+(18, 2, 0.00, 0),
+(19, 2, 0.00, 0),
+(20, 2, 0.00, 0),
+(21, 2, 0.00, 0),
+(22, 2, 0.00, 0),
+(23, 2, 0.00, 0),
+(24, 2, 3640000.00, 0),
+(25, 2, 3640000.00, 0),
+(26, 2, 745000.00, 0),
+(27, 2, 745000.00, 0),
+(28, 2, 745000.00, 0),
+(29, 2, 745000.00, 0),
+(30, 2, 1490000.00, 0),
+(31, 2, 1490000.00, 0),
+(32, 2, 1665000.00, 0),
+(33, 2, 807000.00, 0),
+(34, 2, 807000.00, 0),
+(35, 2, 1734000.00, 0),
+(36, 2, 1490000.00, 0),
+(37, 2, 598000.00, 0),
+(38, 2, 449000.00, 0),
+(39, 2, 898000.00, 0),
+(40, 2, 990000.00, 0),
+(41, 2, 898000.00, 0),
+(42, 2, 1439000.00, 0),
+(43, 2, 30111000.00, 0),
+(44, 2, 60222000.00, 0),
+(45, 2, 2970000.00, 0),
+(46, 2, 2475000.00, 0),
+(47, 2, 2337000.00, 0),
+(48, 2, 5274000.00, 0),
+(49, 2, 5418000.00, 0),
+(50, 2, 9810000.00, 0),
+(51, 1, 2841000.00, 0);
 
 -- --------------------------------------------------------
 
@@ -1533,9 +1596,9 @@ INSERT INTO `order_list` (`id`, `user_info`, `total_price`, `has_process`) VALUE
 
 CREATE TABLE `person` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `address_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `person`
@@ -1558,19 +1621,128 @@ INSERT INTO `person` (`id`, `name`, `address_id`) VALUES
 --
 
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `price` int(11) NOT NULL,
-  `description` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
-  `img_url` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
-  `evaluate` varchar(255) CHARACTER SET utf8 DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` bigint(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `cartegory` varchar(255) DEFAULT NULL,
+  `price` bigint(255) NOT NULL,
+  `description` text NOT NULL,
+  `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
+  `num_evaluate` int(11) NOT NULL,
+  `num_order` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`id`, `product_name`, `price`, `description`, `img_url`, `evaluate`) VALUES
+INSERT INTO `product` (`id`, `product_name`, `cartegory`, `price`, `description`, `gender`, `rate`, `num_evaluate`, `num_order`) VALUES
+(1, 'Áo sơ mi Tencel dáng oversize', NULL, 625000, 'Áo sơ mi cổ đức, dáng oversize với thiết kế tay ngắn kèm dây buộc nơ tạo kiểu. Dọc thân áo là khuy cài kim loại thanh lịch. Áo xẻ tà 2 bên. Phía trước có 2 túi vuông trẻ trung', 'Nữ', 2.00, 1, 3),
+(2, 'Áo sơ mi Tencel tay ngắn', NULL, 693000, 'Áo sơ mi cổ đức. Tay liền có gấu. Dáng áo xuông, 2 bên xẻ kiểu đuôi tôm. Cài bằng hàng khuy đôi có tà ẩn', 'Nữ', 0.00, 0, 4),
+(3, 'Áo sơ mi tay lửng thắt nơ', NULL, 665000, 'Áo sơ mi cổ đức. Tay lửng. Dáng áo xuông, cài bằng hàng khuy đôi', 'Nữ', 3.50, 2, 0),
+(4, 'Áo sơ mi croptop bo eo', NULL, 623000, 'Áo sơ mi với thiết kế sơ mi cách điệu croptop vô cùng sành điệu và tinh tế, mang đến cho người mặc phong cách thanh lịch và hiện đại', 'Nữ', 0.00, 0, 0),
+(5, 'Áo sơ mi hoa tiết ren	', NULL, 763000, 'Chất liệu sợi vải mềm mịn, thoáng mát được tuyển chọn cẩn thận để đảm bảo sự thoải mái tuyệt đối khi mặc vào. Kiểu dáng áo dài thướt tha sẽ tôn lên vẻ đẹp sang trọng', 'Nữ', 0.00, 0, 0),
+(6, 'Áo sơ mi tay xếp', NULL, 763000, 'Áo sơ mi cổ đức vải lụa trơn. Thiết kế dấu khuy tinh tế. Ống tay được xếp tầng và bo nhẹ. Dáng xuông và dài vừa phải', 'Nữ', 0.00, 0, 0),
+(7, 'Áo sơ mi lụa khuy kiểu', NULL, 763000, 'Áo cổ đức cổ điển, được làm mới thân trước hiện đại kết hợp các điểm nhấn xếp li độc đáo', 'Nữ', 0.00, 0, 0),
+(8, 'Áo sơ mi dây rút eo', NULL, 595000, 'Áo với thiết kế cổ đức dài tay cùng dáng suông và chất liệu thô mềm, giúp mang lại cho người diện cảm giác thoải mái và phóng khoáng', 'Nữ', 5.00, 1, 0),
+(9, 'Áo sơ mi TENCEL', NULL, 795000, 'Áo sơ mi cổ đức, dáng oversize với thiết kế tay ngắn kèm dây buộc nơ tạo kiểu. Dọc thân áo là khuy cài kim loại thanh lịch. Áo xẻ tà 2 bên. Phía trước có 2 túi vuông trẻ trung', 'Nữ', 0.00, 0, 0),
+(10, 'Áo sơ mi lụa cánh tiên', NULL, 623000, 'Áo thiết kế cổ tròn, tay cánh tiên, trẻ trung và mát mẻ trong những ngày hè. Chất liệu lụa mỏng nhẹ, dáng áo suông phù hợp mix cùng nhiều kiểu quần, chân váy khác nhau', 'Nữ', 0.00, 0, 0),
+(11, 'Áo thun len ngắn tay phối kẻ ngang', NULL, 763000, 'Áo len ngắn tay được thiết kế với chất liệu len chọn lọc cao cấp, tạo nên hình ảnh mềm mại và sang trọng. Điểm nhấn nằm ở họa tiết kẻ ngang đầy ấn tượng trên nền màu áo đổi lập', 'Nữ', 0.00, 0, 0),
+(12, 'Áo thun đính chữ nổi', NULL, 763000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', 0.00, 0, 0),
+(13, 'Áo thun đính hoa', NULL, 325000, 'Áo thun cổ tròn, tay ngắn. Dáng dài suông. Mặt trước trang trí bông hoa tạo kiểu', 'Nữ', 0.00, 0, 0),
+(14, 'Áo thun in họa tiết vẽ', NULL, 345000, 'Áo phông dáng oversize, tay ngắn, cổ tròn. Cổ có viền màu, phía trước ngực in họa tiết vẽ độc đáo. Chất liệu vải thun thoáng mát, co giãn nhẹ', 'Nữ', 0.00, 0, 0),
+(15, 'Áo thun trơn cổ đức khuy ngọc trai', NULL, 345000, 'Áo thun cổ đức, cài bằng hàng khuy ngọc trai phía trước. Kiểu dáng, màu sắc basic, dáng suông cơ bản', 'Nữ', 0.00, 0, 0),
+(16, 'Áo thun be creative', NULL, 455000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', 0.00, 0, 0),
+(17, 'Áo phối chữ love', NULL, 395000, 'Áo chất thun, cổ tròn, tay ngắn, dáng suông. Trên ngực được phối chữ Love may nổi', 'Nữ', 0.00, 0, 2),
+(18, 'Áo phối be phối chữ nổi', NULL, 455000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', 0.00, 0, 16),
+(19, 'Chân váy xếp ly dáng suông', NULL, 545000, 'Chân váy sở hữu thiết kế xếp ly tinh tế tạo ra những uyển chuyển thướt tha khi di chuyển', 'Nữ', 0.00, 0, 0),
+(20, 'Chân váy xếp ly dáng xòe', NULL, 625000, 'Chân váy xếp ly xòe cạp cao. Tùng dài qua gối, cạp phối khuy tạo kiểu. Cài bằng khóa kéo ẩn bên hông', 'Nữ', 0.00, 0, 0),
+(21, 'Chân váy xòe phối ly', NULL, 875000, 'Với chất liệu vải khaki đứng dáng nhưng không kém phần êm ái, thoải mái cho người mặc, đồng thời cũng rất dễ phối đồ', 'Nữ', 0.00, 0, 1),
+(22, 'Chân váy xếp ly xẻ tà trước', NULL, 745000, 'Thiết kế chân váy xếp ly xòe nhẹ, độ dài qua đầu gối. Cạp cao ôm eo tôn lên vòng 2 của nàng. Điểm nhấn là chi tiết xẻ tà cá tính. Cài bằng khóa kéo ẩn phía sau', 'Nữ', 0.00, 0, 0),
+(23, 'Chân váy chữ A phối viền hoa nổi', NULL, 445000, 'Được thiết kế với chất liệu tuytsi tuyển chọn giúp tạo nên sự thoải mái và độ bền cao. Chiếc váy có phom dáng chữ A, mang đến vẻ thanh lịch và trang nhã cho người diện', 'Nữ', 0.00, 0, 0),
+(24, 'Chân váy MIDI phối ren', NULL, 625000, 'Thiết kế của chân váy được may từ hai lớp vải tinh tế. Ngoài là lớp ren hoa may nổi được điểm trên thân váy, mang đến vẻ ngoài lộng lẫy và thu hút ánh nhìn', 'Nữ', 0.00, 0, 8),
+(25, 'Chân váy xếp ly xẻ tà trước', NULL, 745000, 'Thiết kế chân váy xếp ly xòe nhẹ, độ dài qua đầu gối. Cạp cao ôm eo tôn lên vòng 2 của nàng. Điểm nhấn là chi tiết xẻ tà cá tính. Cài bằng khóa kéo ẩn phía sau', 'Nữ', 0.00, 0, 10),
+(26, 'Quần jaens Baggy', NULL, 763000, 'Mẫu quần Jeans Baggy cạp cao được lựa chọn là item không thế thiếu trong tủ đồ của bất kì bạn nữ nào. Với chất liệu denim cao cấp, sản phẩm có độ bền cao', 'Nữ', 0.00, 0, 0),
+(27, 'Quần Jeans túi vuông', NULL, 763000, 'Hách dáng cùng mẫu quần jeans ống suông mới nhất. Nàng dễ dàng mix với nhiều kiểu áo khác nhau để thể hiện vẻ đẹp tự tin, cá tính của mình', 'Nữ', 0.00, 0, 0),
+(28, 'Quần Jeans loe xẻ gấu', NULL, 545000, 'Đầu tuần chỉn chu và lịch sự với mẫu quần jean form ôm, ống xẻ gấu loe nhẹ. Chất liệu Demin cao cấp, có độ co giãn nhẹ, diện thoải mái không lo bí bách', 'Nữ', 0.00, 0, 18),
+(29, 'Quần Jean lưng cao', NULL, 495000, 'Với chất liệu denim cao cấp, sản phẩm có độ bền cao, đảm bảo bạn có thể mặc nó lâu dài mà không lo sợ sự mài mòn hay rách.', 'Nữ', 0.00, 0, 18),
+(30, 'Quần Jeans dáng suông', NULL, 545000, 'Quần jeans nữ dáng baggy được thiết kế với kiểu dáng suông rộng, mang đến sự thoải mái cho người mặc. Chất liệu vải denim cao cấp mang đến độ bền cao', 'Nữ', 0.00, 0, 0),
+(31, 'Quần Jeans mài đù', NULL, 545000, 'Quần jeans ống đứng, độ dài ngang mắt cá chân, cạp sử dụng khóa và khuy kim loại.Chất liệu denim có độ bền cực kỳ cao cùng màu sắc xanh lơ đánh bạc, đầu gối tạo kiểu mài nhẹ vừa cá tính nhưng vẫn đủ sự tinh tế', 'Nữ', 0.00, 0, 0),
+(32, 'Quần Denim ống xẻ', NULL, 357000, 'Thiết kế quần jean ống suông, rộng, dáng đứng, hơi loe về phía cuối ống. Dọc 2 bên quần có đường gấp nếp bản lớn và xẻ khoảng 10cm', 'Nữ', 0.00, 0, 0),
+(33, 'Quần sooc ORGANZA', NULL, 62300, 'Quần sooc cạp cao, dáng suông, ống đúng, chất liệu Organza cao cấp, đứng phom, dày dặn, có độ bóng nhẹ', 'Nữ', 0.00, 0, 0),
+(34, 'Quần sooc kaki giả váy', NULL, 553000, 'Quần sooc giả váy cạp cao giúp tôn dáng nàng. Đây là lựa chọn hoàn hảo cho nàng muốn diện dáng chân váy ngắn mà vẫn muốn sự thoải mái và kín đáo', 'Nữ', 0.00, 0, 0),
+(35, 'Quần sooc bò gập gấu', NULL, 672000, 'Quần mini short dáng suông, ống gấu gập tầm 3cm được may cố định. Phía trước có túi chéo, phía sau có túi hộp', 'Nữ', 0.00, 0, 0),
+(36, 'Quần sooc bóng', NULL, 623000, 'Quần sooc cạp cao, dáng suông, ống đúng', 'Nữ', 0.00, 0, 5),
+(37, 'Quần sooc oống suông', NULL, 395000, 'Quần sooc cạp cao, cài bằng khóa kéo bên hông, quần có túi chéo 2 bên. Dáng ống suông.', 'Nữ', 0.00, 0, 0),
+(38, 'Quần sooc dáng ngắn', NULL, 395000, 'Quần sooc vải tuysi không co giãn. Cạp cao có đỉa đeo thắt lưng. Quần dáng ngắn cùng chất liệu nhẹ mát thích hợp mặc trong những ngày hè', 'Nữ', 0.00, 0, 0),
+(39, 'Quần sooc lụa trơn', NULL, 225000, 'Thiết kế quần dáng mini short. Độ dài ngang đùi, chất liệu là vải lụa trơn. Trên thân quần được sử dụng cách thiết kế xếp nếp lớn để tạo độ xòe nhẹ tự nhiên', 'Nữ', 0.00, 0, 0),
+(40, 'Giày búp bê Retro', NULL, 149000, 'Giày búp bê mũi bít mang kiểu dáng cổ điển. Gót vuông cao 3cm. Chất liệu da trơn bóng, đai có đính ngọc trai mang lại vẻ thanh lịch.', 'Nữ', 0.00, 0, 0),
+(41, 'Giày cao gót phối lưới', NULL, 149000, 'Giày cao gót mũi nhọn, phối lưới, gót bọc da. Gót cao 7cm.', 'Nữ', 0.00, 0, 0),
+(42, 'Giày da pu mũi nhọn', NULL, 99000, 'Giày mũi nhọn bằng da PU. Có phụ kiện khác màu trang trí. Gót cao 5cm', 'Nữ', 0.00, 0, 0),
+(43, 'Giày cao gót da bóng', NULL, 99000, 'Giày da bóng, mũi tù. Gót cao 4cm.', 'Nữ', 0.00, 0, 0),
+(44, 'Giày mũi nhọn phối màu', NULL, 149000, 'Giày mũi nhọn, Gót nhỏ cao 3cm. 1 dây quai ngang móc cài. Phối 2 màu tạo kiểu', 'Nữ', 0.00, 0, 0),
+(45, 'Túi da xách tay', NULL, 399000, 'Mẫu túi xách tay size medium, chất liệu da PU. Bên trong lót vải, có 1 ngăn ẩn. Quai xách cố định, không tháo rời và điều chỉnh được', 'Nữ', 0.00, 0, 0),
+(46, 'Túi xách HOBO mini', NULL, 299000, 'Túi xách hobo mini quai cắp nách. Dáng không nắp đóng mở bằng khuy bấm nam châm. Túi hình cong, 1 ngăn lớn', 'Nữ', 0.00, 0, 0),
+(47, 'Túi xách hình hộp', NULL, 399000, 'Thiết kế túi hình hộp chữ nhật kèm quai đeo vai có thể tháo rời. Hoạt tiết hình khối được cắt ghép tỉ mỉ tạo sự độc đáo', 'Nữ', 0.00, 0, 0),
+(48, 'Túi big size chần bông', NULL, 399000, 'Túi xách Big size sọc chéo chần bông đan kiểu. Bên trong lót vải. Có 1 ngăn lớn dây kéo khóa bên trong có 2 ngăn nhỏ đi kèm', 'Nữ', 0.00, 0, 0),
+(49, 'Túi da trơn', NULL, 676000, 'Túi da PU. Đóng mở bằng khóa kéo kim loại. Có một quai cầm tay và hai quai đeo vai có thể điều chỉnh ở phía sau.', 'Nữ', 0.00, 0, 2),
+(50, 'Áo thun phối túi hộp', NULL, 207000, 'Áo thun trơn cổ tròn basic sẽ là item không thể thiếu trong những ngày hè sắp tới cho mọi chàng trai.', 'Nam', 0.00, 0, 0),
+(51, 'Áo thun tropical', NULL, 195000, 'Áo phông chất thun trơn, tay ngắn, cổ tròn. Độ dài thoải mái. Phía trước có hình in phong cách Tropical phối cùng chữ.', 'Nam', 0.00, 0, 0),
+(52, 'Áo thun kẻ ngang', NULL, 207000, 'Áo thun cổ tròn, tay ngắn. Họa tiết kẻ ngang và in hình cây tạo điểm nhấn. Dáng áo xuông', 'Nam', 0.00, 0, 0),
+(53, 'Áo thun CITY RIDER', NULL, 147000, 'Áo thun nam cổ tròn, tay ngắn. Trang trí hình và chữ sinh động mặt trước. Dáng áo suông cơ bản', 'Nam', 0.00, 0, 0),
+(54, 'Áo thun dài tay', NULL, 357000, 'Áo thun cổ đức bằng chun co giãn, cài 3 khuy cài. Tay dài bo gấu. Dáng áo suông với màu đơn sắc dễ phối hợp.', 'Nam', 0.00, 0, 0),
+(55, 'Áo thin In QUOTE', NULL, 325000, 'Áo thun dáng cơ bản, ôm nhẹ nhưng không bó, có động rộng nhất định. Tay ngắn, cổ tròn.', 'Nam', 0.00, 0, 0),
+(56, 'Áo thun in chữ ngang', NULL, 325000, 'Áo thun dáng cơ bản, ôm nhẹ nhưng không bó, có động rộng nhất định. Tay ngắn, cổ tròn. Phía trước được in một dòng trích dẫn từ NTK của IVY men.', 'Nam', 0.00, 0, 0),
+(57, 'Áo sơ mi viền cổ', NULL, 357000, 'Áo sơ mi cổ đức, tay dài, dáng slim fit ôm nhẹ. Phần cổ có đường viền.', 'Nam', 0.00, 0, 0),
+(58, 'Áo sơm mi phối line cổ', NULL, 345000, 'Áo sơ mi dáng slim fit với độ dài vừa phải. Ống tay và thân áo ôm nhẹ. Cổ áo là dáng cổ đức được phối cùng một đường line dọc', 'Nam', 0.00, 0, 0),
+(59, 'Áo sơ mi DENIM', NULL, 267000, 'Sơ mi nam tay ngắn. Trên nền vải denim được đánh bạc màu giả. Phía trước có túi ngực. Ống tay gập gấu khoảng 2-3cm. Khuy cài cùng màu với nền vải', 'Nam', 0.00, 0, 0),
+(60, 'Áo sơ mi nam dánh REGULAR', NULL, 387000, 'Áo sơ mi cổ đức, có 2 bên giả túi vuông có khuy trước ngực. Tay dài bo gấu và cài khuy. Cài bằng hàng khuy phía trước.', 'Nam', 0.00, 0, 0),
+(61, 'Áo sơ mi họa tiết MONOGRAM', NULL, 387000, 'Áo sơ mi cổ đức, tay dài có khuy cài. Dáng áo Regular. Vải họa tiết momogram chữ IVY moda tạo điểm nhấn. Cài bằng hàng khuy phía trước.', 'Nam', 0.00, 0, 0),
+(62, 'Áo sơ mi cổ phối màu', NULL, 327000, 'Áo sơ mi cổ đức phối màu hình tam giác. Tay dài bo gấu và 2 khuy cài đính kèm. Vạt áo hình phía trước. Cài bằng hàng khuy ẩn tà phía trước.', 'Nam', 0.00, 0, 0),
+(63, 'Áo khoác gió cổ mũ', NULL, 537000, 'Áo khoác gió 2 lớp phom suông rộng, giúp người mặc thoải mái trong từng cử động, nhưng đồng thời vẫn đảm bảo vừa vặn về số đo vai, độ dài tay, áo', 'Nam', 0.00, 0, 0),
+(64, 'Áo khoác dạ nam kẻ ô', NULL, 987000, 'Áo khoác dạ cổ 2 ve khoét chữ K. Tay dài có hàng khuy trang trí. 2 túi chéo 2 bên. Dáng áo suông dài qua mông. Cài bằng hàng khuy phía trước.', 'Nam', 0.00, 0, 2),
+(65, 'Áo khoác blazer nam', NULL, 807000, 'Áo khoác blazer cổ 2 ve khoét chữ K. Tay dài. Vai đệm. 2 nắp túi bên tà và 1 viền túi giả bên ngực. Có hàng 6 khuy phía trước.', 'Nam', 0.00, 0, 3),
+(66, 'Áo khoác len cardigan nam', NULL, 417000, 'Áo khoác len của nam cổ V, tay dài. Có 2 túi vuông 2 bên không nắp, gấu bo viền co giãn. Độ ôm vừa vặn quanh ngực để tạo cảm giác thoải mái khi mặc.', 'Nam', 0.00, 0, 0),
+(67, 'Áo khoác nam họa tiết đen', NULL, 585000, 'Áo khoác được thiết kế ôm bo ở cổ và tay áo. Kiểu dáng basic nhưng vô cùng nổi bật với họa tiết dây xích màu vàng trên nền áo đen đầy nổi bật và vô cùng cá tính.', 'Nam', 0.00, 0, 0),
+(68, 'Áo khoác nam dây đeo', NULL, 867000, 'Áo khoác gió 2 lớp phom suông rộng, giúp người mặc thoải mái trong từng cử động, nhưng đồng thời vẫn đảm bảo vừa vặn về số đo vai, độ dài tay, áo', 'Nam', 0.00, 0, 5),
+(69, 'Quần bò skinny', NULL, 357000, 'Quần bò dáng skinny ôm nhẹ. Phía trước được đánh bạc sáng màu. Thiết kế năng động và trẻ trung, phù hợp cho những dịp đi chơi của chàng', 'Nam', 0.00, 0, 0),
+(70, 'Quần bò vải sáng', NULL, 387000, 'Quần jeans ống đứng. Gấu lật. Có 5 túi. Mặt trước mài sáng. Cài phía trước bằng khóa kéo và khuy', 'Nam', 0.00, 0, 5),
+(71, 'Quần bò đen dáng slim fit', NULL, 327000, 'Quần bò cạp sử dụng khóa và khuy kim loại. Có 5 túi. Ống quần đứng.', 'Nam', 0.00, 0, 0),
+(72, 'Quần bò Regular fit', NULL, 297000, 'Quần jeans ống suông, dài qua mắt cá chân. Kiểu bạc màu. Gấu lật. Có 5 túi. Cài phía trước bằng khóa kéo và khuy.', 'Nam', 0.00, 0, 1),
+(73, 'Áo khoác dạ nam dáng dài', NULL, 1107000, 'Áo khoác dạ cổ 2 ve khoét chữ K. Tay dài có 3 khuy trang trí. 2 túi vuông có nắp 2 bên. Dáng áo suông dài.', 'Nam', 0.00, 0, 0),
+(74, 'Quần bò slim fit', NULL, 387000, 'Quần jean dài chạm mắt cá chân. Dáng quần ôm nhẹ, ống đứng. Chất liệu vải denim trơn, dày dặn. Đằng trước có khuy cài và khóa kéo', 'Nam', 0.00, 0, 2),
+(75, 'Quần lửng vải phối sợi TENCEL', NULL, 207000, 'Quần lửng ngang gối. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Nhấn đường ly cố định 2 bên ống quần.', 'Nam', 0.00, 0, 0),
+(76, 'Quần lửng nam kaki', NULL, 297000, 'Quần lửng khaki ngang gối. Cạp có đỉa. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Thêu chữ IVY men 1 bên viền túi', 'Nam', 0.00, 0, 0),
+(77, 'Quần lửng nam thun cạp dây kéo rút', NULL, 267000, 'Quần sooc ngang gối dáng Regular. Có 2 túi chéo, 2 túi vuông có nắp bên ống quần. Có dây kéo rút, cạp chun co giãn.', 'Nam', 0.00, 0, 0),
+(78, 'Quần lửng nam kaki phối xanh', NULL, 237000, 'Quần lửng khaki ngang gối. Cạp có đỉa. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Cài phía trước bằng khóa kéo và khuy.', 'Nam', 0.00, 0, 0),
+(79, 'Quần lửng kẻ khuy lệch', NULL, 297000, 'Quần lửng cạp cao có đỉa, khuy cài lệch 1 bên. 2 túi chéo và 2 túi vuông phía sau.', 'Nam', 0.00, 0, 2),
+(80, 'Quần lửng 2 túi', NULL, 287000, 'Quần lửng ngang đùi. Có 2 túi chéo phía trước và túi phía sau. Đáp túi vuông có nắp hai bên ống quần. Cài phía trước bằng khóa kéo và khuy', 'Nam', 0.00, 0, 2),
+(81, 'Quần lửng cạp chun co giãn', NULL, 237000, 'Quần lửng ngang gối. Cạp chun co giãn có dây kéo rút có đỉa, thiết kế túi vuông có nắp 1 bên ống. 2 túi có nắp cài khuy phía sau.', 'Nam', 0.00, 0, 2),
+(82, 'Giày lười nam da thật', NULL, 449000, 'Giày nam thiết kế kiểu giày lười, quai ngang có dây. Đế giày cao 3cm chắc chắn, chống trơn trượt. Đường may chi tiết, tỉ mỉ theo tiêu chuẩn', 'Nam', 0.00, 0, 0),
+(83, 'Giày lười quai ngang', NULL, 449000, 'Giày nam thiết kế kiểu giày lười, quai ngang có dây đan và khóa kim loại. Đế giày cao 3cm chắc chắn, chống trơn trượt. Đường may chi tiết, tỉ mỉ theo tiêu chuẩn.', 'Nam', 0.00, 0, 17),
+(84, 'Giày lười nam đục lỗ', NULL, 299000, 'Giày lười nam họa tiết lỗ. Đế giày chắc chắn, chống trơn trượt. Từng đường may kép tỉ mỉ, chắc chắn chạy quanh giày', 'Nam', 0.00, 0, 2),
+(85, 'Giày thể thao da PU', NULL, 199000, 'Giày thể thao da PU', 'Nam', 0.00, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `product1`
+--
+
+CREATE TABLE `product1` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `price` int(11) NOT NULL,
+  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `img_url` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `evaluate` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `product1`
+--
+
+INSERT INTO `product1` (`id`, `product_name`, `price`, `description`, `img_url`, `evaluate`) VALUES
 (1, 'Cartoon Astronaut T-Shirts1', 100000, 'description1', 'f1.jpg', NULL),
 (2, 'Cartoon Astronaut T-Shirts2', 2500000, 'description2', 'f2.jpg', NULL),
 (3, 'Cartoon Astronaut T-Shirts3', 300000, 'dess3', 'f3.jpg', NULL),
@@ -1599,124 +1771,16 @@ INSERT INTO `product` (`id`, `product_name`, `price`, `description`, `img_url`, 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product2`
---
-
-CREATE TABLE `product2` (
-  `id` bigint(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `price` bigint(255) NOT NULL,
-  `description` text NOT NULL,
-  `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `rate` decimal(10,2) NOT NULL,
-  `num_evaluate` int(11) NOT NULL,
-  `num_order` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `product2`
---
-
-INSERT INTO `product2` (`id`, `product_name`, `price`, `description`, `gender`, `rate`, `num_evaluate`, `num_order`) VALUES
-(1, 'Áo sơ mi Tencel dáng oversize', 625000, 'Áo sơ mi cổ đức, dáng oversize với thiết kế tay ngắn kèm dây buộc nơ tạo kiểu. Dọc thân áo là khuy cài kim loại thanh lịch. Áo xẻ tà 2 bên. Phía trước có 2 túi vuông trẻ trung', 'Nữ', '2.00', 1, 3),
-(2, 'Áo sơ mi Tencel tay ngắn', 693000, 'Áo sơ mi cổ đức. Tay liền có gấu. Dáng áo xuông, 2 bên xẻ kiểu đuôi tôm. Cài bằng hàng khuy đôi có tà ẩn', 'Nữ', '0.00', 0, 4),
-(3, 'Áo sơ mi tay lửng thắt nơ', 665000, 'Áo sơ mi cổ đức. Tay lửng. Dáng áo xuông, cài bằng hàng khuy đôi', 'Nữ', '3.50', 2, 0),
-(4, 'Áo sơ mi croptop bo eo', 623000, 'Áo sơ mi với thiết kế sơ mi cách điệu croptop vô cùng sành điệu và tinh tế, mang đến cho người mặc phong cách thanh lịch và hiện đại', 'Nữ', '0.00', 0, 0),
-(5, 'Áo sơ mi hoa tiết ren	', 763000, 'Chất liệu sợi vải mềm mịn, thoáng mát được tuyển chọn cẩn thận để đảm bảo sự thoải mái tuyệt đối khi mặc vào. Kiểu dáng áo dài thướt tha sẽ tôn lên vẻ đẹp sang trọng', 'Nữ', '0.00', 0, 0),
-(6, 'Áo sơ mi tay xếp', 763000, 'Áo sơ mi cổ đức vải lụa trơn. Thiết kế dấu khuy tinh tế. Ống tay được xếp tầng và bo nhẹ. Dáng xuông và dài vừa phải', 'Nữ', '0.00', 0, 0),
-(7, 'Áo sơ mi lụa khuy kiểu', 763000, 'Áo cổ đức cổ điển, được làm mới thân trước hiện đại kết hợp các điểm nhấn xếp li độc đáo', 'Nữ', '0.00', 0, 0),
-(8, 'Áo sơ mi dây rút eo', 595000, 'Áo với thiết kế cổ đức dài tay cùng dáng suông và chất liệu thô mềm, giúp mang lại cho người diện cảm giác thoải mái và phóng khoáng', 'Nữ', '5.00', 1, 0),
-(9, 'Áo sơ mi TENCEL', 795000, 'Áo sơ mi cổ đức, dáng oversize với thiết kế tay ngắn kèm dây buộc nơ tạo kiểu. Dọc thân áo là khuy cài kim loại thanh lịch. Áo xẻ tà 2 bên. Phía trước có 2 túi vuông trẻ trung', 'Nữ', '0.00', 0, 0),
-(10, 'Áo sơ mi lụa cánh tiên', 623000, 'Áo thiết kế cổ tròn, tay cánh tiên, trẻ trung và mát mẻ trong những ngày hè. Chất liệu lụa mỏng nhẹ, dáng áo suông phù hợp mix cùng nhiều kiểu quần, chân váy khác nhau', 'Nữ', '0.00', 0, 0),
-(11, 'Áo thun len ngắn tay phối kẻ ngang', 763000, 'Áo len ngắn tay được thiết kế với chất liệu len chọn lọc cao cấp, tạo nên hình ảnh mềm mại và sang trọng. Điểm nhấn nằm ở họa tiết kẻ ngang đầy ấn tượng trên nền màu áo đổi lập', 'Nữ', '0.00', 0, 0),
-(12, 'Áo thun đính chữ nổi', 763000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', '0.00', 0, 0),
-(13, 'Áo thun đính hoa', 325000, 'Áo thun cổ tròn, tay ngắn. Dáng dài suông. Mặt trước trang trí bông hoa tạo kiểu', 'Nữ', '0.00', 0, 0),
-(14, 'Áo thun in họa tiết vẽ', 345000, 'Áo phông dáng oversize, tay ngắn, cổ tròn. Cổ có viền màu, phía trước ngực in họa tiết vẽ độc đáo. Chất liệu vải thun thoáng mát, co giãn nhẹ', 'Nữ', '0.00', 0, 0),
-(15, 'Áo thun trơn cổ đức khuy ngọc trai', 345000, 'Áo thun cổ đức, cài bằng hàng khuy ngọc trai phía trước. Kiểu dáng, màu sắc basic, dáng suông cơ bản', 'Nữ', '0.00', 0, 0),
-(16, 'Áo thun be creative', 455000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', '0.00', 0, 0),
-(17, 'Áo phối chữ love', 395000, 'Áo chất thun, cổ tròn, tay ngắn, dáng suông. Trên ngực được phối chữ Love may nổi', 'Nữ', '0.00', 0, 2),
-(18, 'Áo phối be phối chữ nổi', 455000, 'Áo thun cổ tròn. Tay áo ngắn. Dáng áo xuông. Mặt trước in chữ khác màu', 'Nữ', '0.00', 0, 16),
-(19, 'Chân váy xếp ly dáng suông', 545000, 'Chân váy sở hữu thiết kế xếp ly tinh tế tạo ra những uyển chuyển thướt tha khi di chuyển', 'Nữ', '0.00', 0, 0),
-(20, 'Chân váy xếp ly dáng xòe', 625000, 'Chân váy xếp ly xòe cạp cao. Tùng dài qua gối, cạp phối khuy tạo kiểu. Cài bằng khóa kéo ẩn bên hông', 'Nữ', '0.00', 0, 0),
-(21, 'Chân váy xòe phối ly', 875000, 'Với chất liệu vải khaki đứng dáng nhưng không kém phần êm ái, thoải mái cho người mặc, đồng thời cũng rất dễ phối đồ', 'Nữ', '0.00', 0, 1),
-(22, 'Chân váy xếp ly xẻ tà trước', 745000, 'Thiết kế chân váy xếp ly xòe nhẹ, độ dài qua đầu gối. Cạp cao ôm eo tôn lên vòng 2 của nàng. Điểm nhấn là chi tiết xẻ tà cá tính. Cài bằng khóa kéo ẩn phía sau', 'Nữ', '0.00', 0, 0),
-(23, 'Chân váy chữ A phối viền hoa nổi', 445000, 'Được thiết kế với chất liệu tuytsi tuyển chọn giúp tạo nên sự thoải mái và độ bền cao. Chiếc váy có phom dáng chữ A, mang đến vẻ thanh lịch và trang nhã cho người diện', 'Nữ', '0.00', 0, 0),
-(24, 'Chân váy MIDI phối ren', 625000, 'Thiết kế của chân váy được may từ hai lớp vải tinh tế. Ngoài là lớp ren hoa may nổi được điểm trên thân váy, mang đến vẻ ngoài lộng lẫy và thu hút ánh nhìn', 'Nữ', '0.00', 0, 8),
-(25, 'Chân váy xếp ly xẻ tà trước', 745000, 'Thiết kế chân váy xếp ly xòe nhẹ, độ dài qua đầu gối. Cạp cao ôm eo tôn lên vòng 2 của nàng. Điểm nhấn là chi tiết xẻ tà cá tính. Cài bằng khóa kéo ẩn phía sau', 'Nữ', '0.00', 0, 10),
-(26, 'Quần jaens Baggy', 763000, 'Mẫu quần Jeans Baggy cạp cao được lựa chọn là item không thế thiếu trong tủ đồ của bất kì bạn nữ nào. Với chất liệu denim cao cấp, sản phẩm có độ bền cao', 'Nữ', '0.00', 0, 0),
-(27, 'Quần Jeans túi vuông', 763000, 'Hách dáng cùng mẫu quần jeans ống suông mới nhất. Nàng dễ dàng mix với nhiều kiểu áo khác nhau để thể hiện vẻ đẹp tự tin, cá tính của mình', 'Nữ', '0.00', 0, 0),
-(28, 'Quần Jeans loe xẻ gấu', 545000, 'Đầu tuần chỉn chu và lịch sự với mẫu quần jean form ôm, ống xẻ gấu loe nhẹ. Chất liệu Demin cao cấp, có độ co giãn nhẹ, diện thoải mái không lo bí bách', 'Nữ', '0.00', 0, 18),
-(29, 'Quần Jean lưng cao', 495000, 'Với chất liệu denim cao cấp, sản phẩm có độ bền cao, đảm bảo bạn có thể mặc nó lâu dài mà không lo sợ sự mài mòn hay rách.', 'Nữ', '0.00', 0, 18),
-(30, 'Quần Jeans dáng suông', 545000, 'Quần jeans nữ dáng baggy được thiết kế với kiểu dáng suông rộng, mang đến sự thoải mái cho người mặc. Chất liệu vải denim cao cấp mang đến độ bền cao', 'Nữ', '0.00', 0, 0),
-(31, 'Quần Jeans mài đù', 545000, 'Quần jeans ống đứng, độ dài ngang mắt cá chân, cạp sử dụng khóa và khuy kim loại.Chất liệu denim có độ bền cực kỳ cao cùng màu sắc xanh lơ đánh bạc, đầu gối tạo kiểu mài nhẹ vừa cá tính nhưng vẫn đủ sự tinh tế', 'Nữ', '0.00', 0, 0),
-(32, 'Quần Denim ống xẻ', 357000, 'Thiết kế quần jean ống suông, rộng, dáng đứng, hơi loe về phía cuối ống. Dọc 2 bên quần có đường gấp nếp bản lớn và xẻ khoảng 10cm', 'Nữ', '0.00', 0, 0),
-(33, 'Quần sooc ORGANZA', 62300, 'Quần sooc cạp cao, dáng suông, ống đúng, chất liệu Organza cao cấp, đứng phom, dày dặn, có độ bóng nhẹ', 'Nữ', '0.00', 0, 0),
-(34, 'Quần sooc kaki giả váy', 553000, 'Quần sooc giả váy cạp cao giúp tôn dáng nàng. Đây là lựa chọn hoàn hảo cho nàng muốn diện dáng chân váy ngắn mà vẫn muốn sự thoải mái và kín đáo', 'Nữ', '0.00', 0, 0),
-(35, 'Quần sooc bò gập gấu', 672000, 'Quần mini short dáng suông, ống gấu gập tầm 3cm được may cố định. Phía trước có túi chéo, phía sau có túi hộp', 'Nữ', '0.00', 0, 0),
-(36, 'Quần sooc bóng', 623000, 'Quần sooc cạp cao, dáng suông, ống đúng', 'Nữ', '0.00', 0, 5),
-(37, 'Quần sooc oống suông', 395000, 'Quần sooc cạp cao, cài bằng khóa kéo bên hông, quần có túi chéo 2 bên. Dáng ống suông.', 'Nữ', '0.00', 0, 0),
-(38, 'Quần sooc dáng ngắn', 395000, 'Quần sooc vải tuysi không co giãn. Cạp cao có đỉa đeo thắt lưng. Quần dáng ngắn cùng chất liệu nhẹ mát thích hợp mặc trong những ngày hè', 'Nữ', '0.00', 0, 0),
-(39, 'Quần sooc lụa trơn', 225000, 'Thiết kế quần dáng mini short. Độ dài ngang đùi, chất liệu là vải lụa trơn. Trên thân quần được sử dụng cách thiết kế xếp nếp lớn để tạo độ xòe nhẹ tự nhiên', 'Nữ', '0.00', 0, 0),
-(40, 'Giày búp bê Retro', 149000, 'Giày búp bê mũi bít mang kiểu dáng cổ điển. Gót vuông cao 3cm. Chất liệu da trơn bóng, đai có đính ngọc trai mang lại vẻ thanh lịch.', 'Nữ', '0.00', 0, 0),
-(41, 'Giày cao gót phối lưới', 149000, 'Giày cao gót mũi nhọn, phối lưới, gót bọc da. Gót cao 7cm.', 'Nữ', '0.00', 0, 0),
-(42, 'Giày da pu mũi nhọn', 99000, 'Giày mũi nhọn bằng da PU. Có phụ kiện khác màu trang trí. Gót cao 5cm', 'Nữ', '0.00', 0, 0),
-(43, 'Giày cao gót da bóng', 99000, 'Giày da bóng, mũi tù. Gót cao 4cm.', 'Nữ', '0.00', 0, 0),
-(44, 'Giày mũi nhọn phối màu', 149000, 'Giày mũi nhọn, Gót nhỏ cao 3cm. 1 dây quai ngang móc cài. Phối 2 màu tạo kiểu', 'Nữ', '0.00', 0, 0),
-(45, 'Túi da xách tay', 399000, 'Mẫu túi xách tay size medium, chất liệu da PU. Bên trong lót vải, có 1 ngăn ẩn. Quai xách cố định, không tháo rời và điều chỉnh được', 'Nữ', '0.00', 0, 0),
-(46, 'Túi xách HOBO mini', 299000, 'Túi xách hobo mini quai cắp nách. Dáng không nắp đóng mở bằng khuy bấm nam châm. Túi hình cong, 1 ngăn lớn', 'Nữ', '0.00', 0, 0),
-(47, 'Túi xách hình hộp', 399000, 'Thiết kế túi hình hộp chữ nhật kèm quai đeo vai có thể tháo rời. Hoạt tiết hình khối được cắt ghép tỉ mỉ tạo sự độc đáo', 'Nữ', '0.00', 0, 0),
-(48, 'Túi big size chần bông', 399000, 'Túi xách Big size sọc chéo chần bông đan kiểu. Bên trong lót vải. Có 1 ngăn lớn dây kéo khóa bên trong có 2 ngăn nhỏ đi kèm', 'Nữ', '0.00', 0, 0),
-(49, 'Túi da trơn', 676000, 'Túi da PU. Đóng mở bằng khóa kéo kim loại. Có một quai cầm tay và hai quai đeo vai có thể điều chỉnh ở phía sau.', 'Nữ', '0.00', 0, 2),
-(50, 'Áo thun phối túi hộp', 207000, 'Áo thun trơn cổ tròn basic sẽ là item không thể thiếu trong những ngày hè sắp tới cho mọi chàng trai.', 'Nam', '0.00', 0, 0),
-(51, 'Áo thun tropical', 195000, 'Áo phông chất thun trơn, tay ngắn, cổ tròn. Độ dài thoải mái. Phía trước có hình in phong cách Tropical phối cùng chữ.', 'Nam', '0.00', 0, 0),
-(52, 'Áo thun kẻ ngang', 207000, 'Áo thun cổ tròn, tay ngắn. Họa tiết kẻ ngang và in hình cây tạo điểm nhấn. Dáng áo xuông', 'Nam', '0.00', 0, 0),
-(53, 'Áo thun CITY RIDER', 147000, 'Áo thun nam cổ tròn, tay ngắn. Trang trí hình và chữ sinh động mặt trước. Dáng áo suông cơ bản', 'Nam', '0.00', 0, 0),
-(54, 'Áo thun dài tay', 357000, 'Áo thun cổ đức bằng chun co giãn, cài 3 khuy cài. Tay dài bo gấu. Dáng áo suông với màu đơn sắc dễ phối hợp.', 'Nam', '0.00', 0, 0),
-(55, 'Áo thin In QUOTE', 325000, 'Áo thun dáng cơ bản, ôm nhẹ nhưng không bó, có động rộng nhất định. Tay ngắn, cổ tròn.', 'Nam', '0.00', 0, 0),
-(56, 'Áo thun in chữ ngang', 325000, 'Áo thun dáng cơ bản, ôm nhẹ nhưng không bó, có động rộng nhất định. Tay ngắn, cổ tròn. Phía trước được in một dòng trích dẫn từ NTK của IVY men.', 'Nam', '0.00', 0, 0),
-(57, 'Áo sơ mi viền cổ', 357000, 'Áo sơ mi cổ đức, tay dài, dáng slim fit ôm nhẹ. Phần cổ có đường viền.', 'Nam', '0.00', 0, 0),
-(58, 'Áo sơm mi phối line cổ', 345000, 'Áo sơ mi dáng slim fit với độ dài vừa phải. Ống tay và thân áo ôm nhẹ. Cổ áo là dáng cổ đức được phối cùng một đường line dọc', 'Nam', '0.00', 0, 0),
-(59, 'Áo sơ mi DENIM', 267000, 'Sơ mi nam tay ngắn. Trên nền vải denim được đánh bạc màu giả. Phía trước có túi ngực. Ống tay gập gấu khoảng 2-3cm. Khuy cài cùng màu với nền vải', 'Nam', '0.00', 0, 0),
-(60, 'Áo sơ mi nam dánh REGULAR', 387000, 'Áo sơ mi cổ đức, có 2 bên giả túi vuông có khuy trước ngực. Tay dài bo gấu và cài khuy. Cài bằng hàng khuy phía trước.', 'Nam', '0.00', 0, 0),
-(61, 'Áo sơ mi họa tiết MONOGRAM', 387000, 'Áo sơ mi cổ đức, tay dài có khuy cài. Dáng áo Regular. Vải họa tiết momogram chữ IVY moda tạo điểm nhấn. Cài bằng hàng khuy phía trước.', 'Nam', '0.00', 0, 0),
-(62, 'Áo sơ mi cổ phối màu', 327000, 'Áo sơ mi cổ đức phối màu hình tam giác. Tay dài bo gấu và 2 khuy cài đính kèm. Vạt áo hình phía trước. Cài bằng hàng khuy ẩn tà phía trước.', 'Nam', '0.00', 0, 0),
-(63, 'Áo khoác gió cổ mũ', 537000, 'Áo khoác gió 2 lớp phom suông rộng, giúp người mặc thoải mái trong từng cử động, nhưng đồng thời vẫn đảm bảo vừa vặn về số đo vai, độ dài tay, áo', 'Nam', '0.00', 0, 0),
-(64, 'Áo khoác dạ nam kẻ ô', 987000, 'Áo khoác dạ cổ 2 ve khoét chữ K. Tay dài có hàng khuy trang trí. 2 túi chéo 2 bên. Dáng áo suông dài qua mông. Cài bằng hàng khuy phía trước.', 'Nam', '0.00', 0, 0),
-(65, 'Áo khoác blazer nam', 807000, 'Áo khoác blazer cổ 2 ve khoét chữ K. Tay dài. Vai đệm. 2 nắp túi bên tà và 1 viền túi giả bên ngực. Có hàng 6 khuy phía trước.', 'Nam', '0.00', 0, 3),
-(66, 'Áo khoác len cardigan nam', 417000, 'Áo khoác len của nam cổ V, tay dài. Có 2 túi vuông 2 bên không nắp, gấu bo viền co giãn. Độ ôm vừa vặn quanh ngực để tạo cảm giác thoải mái khi mặc.', 'Nam', '0.00', 0, 0),
-(67, 'Áo khoác nam họa tiết đen', 585000, 'Áo khoác được thiết kế ôm bo ở cổ và tay áo. Kiểu dáng basic nhưng vô cùng nổi bật với họa tiết dây xích màu vàng trên nền áo đen đầy nổi bật và vô cùng cá tính.', 'Nam', '0.00', 0, 0),
-(68, 'Áo khoác nam dây đeo', 867000, 'Áo khoác gió 2 lớp phom suông rộng, giúp người mặc thoải mái trong từng cử động, nhưng đồng thời vẫn đảm bảo vừa vặn về số đo vai, độ dài tay, áo', 'Nam', '0.00', 0, 4),
-(69, 'Quần bò skinny', 357000, 'Quần bò dáng skinny ôm nhẹ. Phía trước được đánh bạc sáng màu. Thiết kế năng động và trẻ trung, phù hợp cho những dịp đi chơi của chàng', 'Nam', '0.00', 0, 0),
-(70, 'Quần bò vải sáng', 387000, 'Quần jeans ống đứng. Gấu lật. Có 5 túi. Mặt trước mài sáng. Cài phía trước bằng khóa kéo và khuy', 'Nam', '0.00', 0, 5),
-(71, 'Quần bò đen dáng slim fit', 327000, 'Quần bò cạp sử dụng khóa và khuy kim loại. Có 5 túi. Ống quần đứng.', 'Nam', '0.00', 0, 0),
-(72, 'Quần bò Regular fit', 297000, 'Quần jeans ống suông, dài qua mắt cá chân. Kiểu bạc màu. Gấu lật. Có 5 túi. Cài phía trước bằng khóa kéo và khuy.', 'Nam', '0.00', 0, 1),
-(73, 'Áo khoác dạ nam dáng dài', 1107000, 'Áo khoác dạ cổ 2 ve khoét chữ K. Tay dài có 3 khuy trang trí. 2 túi vuông có nắp 2 bên. Dáng áo suông dài.', 'Nam', '0.00', 0, 0),
-(74, 'Quần bò slim fit', 387000, 'Quần jean dài chạm mắt cá chân. Dáng quần ôm nhẹ, ống đứng. Chất liệu vải denim trơn, dày dặn. Đằng trước có khuy cài và khóa kéo', 'Nam', '0.00', 0, 2),
-(75, 'Quần lửng vải phối sợi TENCEL', 207000, 'Quần lửng ngang gối. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Nhấn đường ly cố định 2 bên ống quần.', 'Nam', '0.00', 0, 0),
-(76, 'Quần lửng nam kaki', 297000, 'Quần lửng khaki ngang gối. Cạp có đỉa. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Thêu chữ IVY men 1 bên viền túi', 'Nam', '0.00', 0, 0),
-(77, 'Quần lửng nam thun cạp dây kéo rút', 267000, 'Quần sooc ngang gối dáng Regular. Có 2 túi chéo, 2 túi vuông có nắp bên ống quần. Có dây kéo rút, cạp chun co giãn.', 'Nam', '0.00', 0, 0),
-(78, 'Quần lửng nam kaki phối xanh', 237000, 'Quần lửng khaki ngang gối. Cạp có đỉa. Có 2 túi phía trước và 2 túi có khuy cài phía sau. Cài phía trước bằng khóa kéo và khuy.', 'Nam', '0.00', 0, 0),
-(79, 'Quần lửng kẻ khuy lệch', 297000, 'Quần lửng cạp cao có đỉa, khuy cài lệch 1 bên. 2 túi chéo và 2 túi vuông phía sau.', 'Nam', '0.00', 0, 2),
-(80, 'Quần lửng 2 túi', 287000, 'Quần lửng ngang đùi. Có 2 túi chéo phía trước và túi phía sau. Đáp túi vuông có nắp hai bên ống quần. Cài phía trước bằng khóa kéo và khuy', 'Nam', '0.00', 0, 2),
-(81, 'Quần lửng cạp chun co giãn', 237000, 'Quần lửng ngang gối. Cạp chun co giãn có dây kéo rút có đỉa, thiết kế túi vuông có nắp 1 bên ống. 2 túi có nắp cài khuy phía sau.', 'Nam', '0.00', 0, 2),
-(82, 'Giày lười nam da thật', 449000, 'Giày nam thiết kế kiểu giày lười, quai ngang có dây. Đế giày cao 3cm chắc chắn, chống trơn trượt. Đường may chi tiết, tỉ mỉ theo tiêu chuẩn', 'Nam', '0.00', 0, 0),
-(83, 'Giày lười quai ngang', 449000, 'Giày nam thiết kế kiểu giày lười, quai ngang có dây đan và khóa kim loại. Đế giày cao 3cm chắc chắn, chống trơn trượt. Đường may chi tiết, tỉ mỉ theo tiêu chuẩn.', 'Nam', '0.00', 0, 17),
-(84, 'Giày lười nam đục lỗ', 299000, 'Giày lười nam họa tiết lỗ. Đế giày chắc chắn, chống trơn trượt. Từng đường may kép tỉ mỉ, chắc chắn chạy quanh giày', 'Nam', '0.00', 0, 2),
-(85, 'Giày thể thao da PU', 199000, 'Giày thể thao da PU', 'Nam', '0.00', 0, 0);
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `student`
 --
 
 CREATE TABLE `student` (
   `ID` int(11) NOT NULL,
-  `NAME` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `GENDER` varchar(6) CHARACTER SET latin1 NOT NULL,
-  `COUNTRY` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `NAME` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `GENDER` varchar(6) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `COUNTRY` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `AGE` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `student`
@@ -1748,9 +1812,9 @@ INSERT INTO `student` (`ID`, `NAME`, `GENDER`, `COUNTRY`, `AGE`) VALUES
 
 CREATE TABLE `type_product` (
   `id` int(11) NOT NULL,
-  `name_type` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `name_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `pid` bigint(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `type_product`
@@ -1919,7 +1983,9 @@ INSERT INTO `type_product` (`id`, `name_type`, `pid`) VALUES
 (160, 'Phụ kiện', 82),
 (161, 'Phụ kiện', 83),
 (162, 'Phụ kiện', 84),
-(163, 'Phụ kiện', 85);
+(163, 'Phụ kiện', 85),
+(164, 'Summer', 53),
+(165, 'Summer', 75);
 
 -- --------------------------------------------------------
 
@@ -1933,12 +1999,12 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `roles` varchar(255) NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `uid_inf` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
@@ -1946,7 +2012,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `phone`, `address`, `roles`, `first_name`, `last_name`, `uid_inf`) VALUES
 (1, 'nbva2002', '1722002', 'nguyenbavietanh2002@gmail.com', '0837021702', 'Hòa Bình', 'ROLE_ADMIN', 'Nguyen Ba', 'Viet Anh adm', 1),
-(2, 'nbva', '123', 'nguyenbavietanh_t65@hus.edu.vn', '3600395', '', 'ROLE_USER', 'Nguyen Ba', 'Viet Anh', 2),
+(2, 'nbva', '123', 'nguyenbavietanh_t65@hus.edu.vn', '3600395', 'Hà Nội', 'ROLE_USER', 'Nguyen Ba', 'Viet Anh', 2),
 (4, 'abvn', '890', 'nbva2@gmail.com', '1', '', 'ROLE_USER', 'Viet Anh', 'Nguyen Ba', 4),
 (5, 'abvnaaaa', '890000', 'nbavanh@gmail.com', '2', '', 'ROLE_USER', 'Ho', 'Ten', 5),
 (6, 'banhmicay', 'anhanh2002', 'minhanh14082002@gmail.com', '0327296356', 'Hà Nội', 'ROLE_USER', 'Tran Hoang', 'Minh Anh', 6),
@@ -1963,7 +2029,7 @@ CREATE TABLE `user_inf` (
   `id` bigint(20) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user_inf`
@@ -1987,6 +2053,21 @@ INSERT INTO `user_inf` (`id`, `first_name`, `last_name`) VALUES
 --
 ALTER TABLE `address`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `cartegory`
+--
+ALTER TABLE `cartegory`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cartegory_name_2` (`cartegory_name`),
+  ADD KEY `cartegory_name` (`cartegory_type`);
+
+--
+-- Chỉ mục cho bảng `cartegory_type`
+--
+ALTER TABLE `cartegory_type`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cartegory_type` (`cartegory_type`);
 
 --
 -- Chỉ mục cho bảng `cart_item`
@@ -2035,12 +2116,13 @@ ALTER TABLE `person`
 -- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cartegory` (`cartegory`);
 
 --
--- Chỉ mục cho bảng `product2`
+-- Chỉ mục cho bảng `product1`
 --
-ALTER TABLE `product2`
+ALTER TABLE `product1`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2081,10 +2163,22 @@ ALTER TABLE `address`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT cho bảng `cartegory`
+--
+ALTER TABLE `cartegory`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT cho bảng `cartegory_type`
+--
+ALTER TABLE `cartegory_type`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT cho bảng `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT cho bảng `evaluate`
@@ -2108,7 +2202,7 @@ ALTER TABLE `list_order`
 -- AUTO_INCREMENT cho bảng `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT cho bảng `person`
@@ -2120,13 +2214,13 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
--- AUTO_INCREMENT cho bảng `product2`
+-- AUTO_INCREMENT cho bảng `product1`
 --
-ALTER TABLE `product2`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+ALTER TABLE `product1`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `student`
@@ -2138,7 +2232,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT cho bảng `type_product`
 --
 ALTER TABLE `type_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
@@ -2157,10 +2251,16 @@ ALTER TABLE `user_inf`
 --
 
 --
+-- Các ràng buộc cho bảng `cartegory`
+--
+ALTER TABLE `cartegory`
+  ADD CONSTRAINT `cartegory_ibfk_1` FOREIGN KEY (`cartegory_type`) REFERENCES `cartegory_type` (`cartegory_type`);
+
+--
 -- Các ràng buộc cho bảng `cart_item`
 --
 ALTER TABLE `cart_item`
-  ADD CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product2` (`id`),
+  ADD CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`oid`) REFERENCES `order_list` (`id`);
 
 --
@@ -2168,13 +2268,13 @@ ALTER TABLE `cart_item`
 --
 ALTER TABLE `evaluate`
   ADD CONSTRAINT `evaluate_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user_inf` (`id`),
-  ADD CONSTRAINT `evaluate_ibfk_3` FOREIGN KEY (`pid`) REFERENCES `product2` (`id`);
+  ADD CONSTRAINT `evaluate_ibfk_3` FOREIGN KEY (`pid`) REFERENCES `product` (`id`);
 
 --
 -- Các ràng buộc cho bảng `img_product`
 --
 ALTER TABLE `img_product`
-  ADD CONSTRAINT `img_product_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product2` (`id`);
+  ADD CONSTRAINT `img_product_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product` (`id`);
 
 --
 -- Các ràng buộc cho bảng `order_list`
@@ -2189,10 +2289,16 @@ ALTER TABLE `person`
   ADD CONSTRAINT `person_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
 
 --
+-- Các ràng buộc cho bảng `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`cartegory`) REFERENCES `cartegory` (`cartegory_name`);
+
+--
 -- Các ràng buộc cho bảng `type_product`
 --
 ALTER TABLE `type_product`
-  ADD CONSTRAINT `type_product_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product2` (`id`);
+  ADD CONSTRAINT `type_product_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product` (`id`);
 
 --
 -- Các ràng buộc cho bảng `user`

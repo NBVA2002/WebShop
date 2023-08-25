@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.util.List;
 @Entity
 @Table(name = "order_list")
@@ -26,6 +27,8 @@ public class OrderEntity {
     private double totalPrice;
 
     private boolean hasProcess;
+
+    private Date orderDate;
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     List<CartItemEntity> cartItemEntity;

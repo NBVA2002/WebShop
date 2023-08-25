@@ -3,6 +3,7 @@ package com.javabe.webshop.controller;
 import com.javabe.webshop.entity.TypeProductEntity;
 import com.javabe.webshop.model.FilterProduct;
 import com.javabe.webshop.entity.ProductEntity;
+import com.javabe.webshop.model.ProductDAO;
 import com.javabe.webshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,26 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/create")
-    public ProductEntity create(@RequestBody ProductEntity productEntity) {
+    public ProductEntity create(@RequestBody ProductDAO productDAO) {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setProductName(productDAO.getProductName());
+        productEntity.setPrice(productDAO.getPrice());
+        productEntity.setGender(productDAO.getGender());
+        productEntity.setDescription(productDAO.getDescription());
+        productEntity.setGender(productDAO.getGender());
+        productEntity.setCategory(productDAO.getCategory());
         return productService.create(productEntity);
     }
 
-    @PutMapping("/update")
-    public ProductEntity update(@RequestBody ProductEntity productEntity, @PathVariable("id") Long id) {
+    @PutMapping("/update/{id}")
+    public ProductEntity update(@RequestBody ProductDAO productDAO, @PathVariable("id") Long id) {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setProductName(productDAO.getProductName());
+        productEntity.setPrice(productDAO.getPrice());
+        productEntity.setGender(productDAO.getGender());
+        productEntity.setDescription(productDAO.getDescription());
+        productEntity.setGender(productDAO.getGender());
+        productEntity.setCategory(productDAO.getCategory());
         return productService.update(id, productEntity);
     }
 
@@ -41,6 +56,8 @@ public class ProductController {
     @GetMapping("/list")
     public Page<ProductEntity> findAll(@RequestParam("search") String search,
                                        @RequestParam("gender") String gender,
+                                       @RequestParam("categorytype") Long categoryType,
+                                       @RequestParam("category") Long categoryID,
                                        @RequestParam("type") String type,
                                        @RequestParam("rate") int rate,
                                        @RequestParam("pricegt") int priceGT,
@@ -60,7 +77,7 @@ public class ProductController {
             pageable = PageRequest.of(page - 1, limit);
         }
 
-        FilterProduct filter = new FilterProduct(search, priceGT, priceLT, gender, rate, type);
+        FilterProduct filter = new FilterProduct(search, priceGT, priceLT, gender, rate, categoryType, categoryID, type);
         System.out.println(filter);
         return productService.findAll(filter, pageable);
     }

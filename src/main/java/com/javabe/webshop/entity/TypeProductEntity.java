@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "type_product")
+@Table(name = "collection")
 public class TypeProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "collection_name")
     private String nameType;
 
     @JsonIgnore

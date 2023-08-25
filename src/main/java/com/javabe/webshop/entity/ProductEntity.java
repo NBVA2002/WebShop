@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "product2")
+@Table(name = "product")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,6 +22,10 @@ public class ProductEntity {
     private Long id;
 
     private String productName;
+
+    @OneToOne
+    @JoinColumn(name = "category")
+    private CategoryEntity category;
 
     private int price;
 

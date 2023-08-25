@@ -64,6 +64,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests().requestMatchers("/cart/**").permitAll()
                 .and()
+                .authorizeRequests().requestMatchers("/category/**").permitAll()
+                .and()
                 .authorizeRequests().requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

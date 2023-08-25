@@ -1,9 +1,12 @@
 package com.javabe.webshop.service.impl;
 
+import com.javabe.webshop.entity.CategoryEntity;
+import com.javabe.webshop.entity.CategoryTypeEntity;
 import com.javabe.webshop.entity.TypeProductEntity;
 import com.javabe.webshop.model.FilterProduct;
 import com.javabe.webshop.entity.ProductEntity;
 import com.javabe.webshop.repository.ProductRepository;
+import com.javabe.webshop.service.CategoryService;
 import com.javabe.webshop.service.ProductService;
 import jakarta.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,9 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ProductRepository productRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public ProductEntity create(ProductEntity productEntity) {
@@ -54,6 +60,21 @@ public class ProductServiceImpl implements ProductService {
             });
         }
 
+        if (filterProduct.getCategoryType() != 0) {
+            specification = specification.and((root, query, criteriaBuilder) -> {
+                Join<CategoryEntity, ProductEntity> category = root.join("category");
+                Join<CategoryTypeEntity, CategoryEntity> categoryType = category.join("categoryType");
+                return criteriaBuilder.equal(categoryType.get("id"), filterProduct.getCategoryType());
+            });
+        }
+
+        if (filterProduct.getCategoryID() != 0) {
+            specification = specification.and((root, query, criteriaBuilder) -> {
+                Join<CategoryEntity, ProductEntity> category = root.join("category");
+                return criteriaBuilder.equal(category.get("id"), filterProduct.getCategoryID());
+            });
+        }
+
         specification = specification.and(((root, query, criteriaBuilder)
                 -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), filterProduct.getPriceGT())));
 
@@ -70,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        ProductEntity product = productRepository.getById(id);
+        ProductEntity product = findById(id);
         if (productRepository != null) {
             if (product != null) {
                 productRepository.delete(product);

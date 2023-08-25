@@ -13,6 +13,8 @@ public class FilterProduct {
     private int priceLT;
     private String gender;
     private int rate;
+    private Long categoryType;
+    private Long categoryID;
     private String type;
 
     @Override

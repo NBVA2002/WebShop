@@ -18,6 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.List;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,14 +45,14 @@ public class OrderController {
 
     @PostMapping("/create")
     public OrderEntity addEvaluate(@RequestBody OrderEntity orderEntity,
-                                      HttpServletRequest request) {
+                                   HttpServletRequest request) {
         String userToken = jwtAuthenticationFilter.getJwtFromRequest(request);
         String username = tokenProvider.getUserIdFromJWT(userToken);
         UserEntity userEntity = userService.findByUsername(username).get(0);
         return orderService.addOrder(userEntity, orderEntity);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public OrderEntity update(@RequestBody OrderEntity orderEntity, @PathVariable("id") Long id) {
         return orderService.updateOrder(id, orderEntity);
     }
@@ -61,9 +64,9 @@ public class OrderController {
 
     @GetMapping("/list")
     public Page<OrderEntity> findAll(@RequestParam("limit") int limit,
-                                       @RequestParam("page") int page,
-                                       @RequestParam("sortby") String sortBy,
-                                       @RequestParam("sort") String sort) {
+                                     @RequestParam("page") int page,
+                                     @RequestParam("sortby") String sortBy,
+                                     @RequestParam("sort") String sort) {
         Pageable pageable = null;
         if (!sortBy.equals("none")) {
             if (sort.equals("desc")) {
@@ -77,4 +80,48 @@ public class OrderController {
         return orderService.getOrder(pageable);
     }
 
+    @GetMapping("/list/{uid}")
+    public Page<OrderEntity> findByUID(@PathVariable(value = "uid") Long uid,
+                                      @RequestParam("limit") int limit,
+                                      @RequestParam("page") int page,
+                                      @RequestParam("sortby") String sortBy,
+                                      @RequestParam("sort") String sort) {
+        Pageable pageable = null;
+        if (!sortBy.equals("none")) {
+            if (sort.equals("desc")) {
+                pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, sortBy));
+            } else if (sort.equals("asc")) {
+                pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.ASC, sortBy));
+            }
+        } else {
+            pageable = PageRequest.of(page - 1, limit);
+        }
+        return orderService.getOrderByUID(uid, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public OrderEntity findByUID(@PathVariable(value = "id") Long oid) {
+        return orderService.findById(oid);
+    }
+
+    @GetMapping("/total")
+    public Double findOrderOrder() {
+        Double total = 0.0;
+        for (OrderEntity orderEntity : orderService.findAll()) {
+            total += orderEntity.getTotalPrice();
+        }
+        return total;
+    }
+
+    @GetMapping("/listall")
+    public List<OrderEntity> findListOrder() {
+        return orderService.findAll();
+    }
+
+    @GetMapping("/listdate")
+    public List<OrderEntity> findByDate(@RequestParam(value = "from") Date fromDate,
+                                        @RequestParam(value = "to") Date toDate) {
+
+        return orderService.getListOrderByDate(fromDate, toDate);
+    }
 }
