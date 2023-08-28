@@ -18,3 +18,4 @@ public class CategoryTypeEntity {
     @Column(name = "category_type")
     private String categoryType;
 }
+
