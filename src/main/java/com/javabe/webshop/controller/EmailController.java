@@ -65,6 +65,7 @@ public class EmailController {
                         + "Tên khách hàng: " + userEntity.getFirstName() + " " + userEntity.getLastName() + "\n"
                         + "Số điện thoại: " + userEntity.getPhone() + "\n"
                         + "Địa chỉ: " + userEntity.getAddress() + "\n"
+                        + "Ngày đặt hàng: " + orderEntity.getOrderDate() + "\n"
                 +   "Tổng tiền: " + orderEntity.getTotalPrice() + "đ");
         return "mail to " + userEntity.getEmail();
     }
