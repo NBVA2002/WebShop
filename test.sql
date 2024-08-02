@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
---
+--https://app.box.com/signup/collab/ab044atuqw?box_source=legacy-external_collab_email&amp;box_action=click_button
 -- Máy chủ: 127.0.0.1
 -- Thời gian đã tạo: Th8 23, 2023 lúc 04:03 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
