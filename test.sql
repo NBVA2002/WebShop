@@ -1,4 +1,9 @@
 -- phpMyAdmin SQL Dump
+https://docs.camunda.io/docs/components/modeler/bpmn/
+https://docs.camunda.io/docs/components/modeler/bpmn/
+https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/introduction-to-task-applications/
+https://github.com/camunda-community-hub/zeebe-simple-monitor
+https://github.com/camunda-community-hub/zeebe-simple-tasklist
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --https://app.box.com/signup/collab/ab044atuqw?box_source=legacy-external_collab_email&amp;box_action=click_button
