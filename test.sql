@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 https://docs.camunda.io/docs/components/modeler/bpmn/
-https://docs.camunda.io/docs/components/modeler/bpmn/
+https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/task-application-architecture/
 https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/introduction-to-task-applications/
 https://github.com/camunda-community-hub/zeebe-simple-monitor
 https://github.com/camunda-community-hub/zeebe-simple-tasklist
