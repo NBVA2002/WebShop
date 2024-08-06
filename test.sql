@@ -1,4 +1,5 @@
 -- phpMyAdmin SQL Dump
+https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/samples/plugpdb/README.md
 https://docs.camunda.io/docs/components/modeler/bpmn/
 https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/task-application-architecture/
 https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/introduction-to-task-applications/
