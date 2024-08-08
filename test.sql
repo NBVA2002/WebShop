@@ -1,4 +1,24 @@
 -- phpMyAdmin SQL Dump
+version: '3.9'
+
+services:
+  database:
+    image: "container-registry.oracle.com/database/enterprise"
+    container_name: oracle-MPLIST
+    ports:
+      - 1521:1521
+      - 5500:5500
+    environment:
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: ORCLPDB1
+      ORACLE_PWD: YourPassword123
+#    volumes:
+#      - ./data:/opt/oracle/oradata
+  redis:
+    image: "redis:latest"
+    container_name: redis_VTS
+    ports:
+      - "6379:6379"
 https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/samples/plugpdb/README.md
 https://docs.camunda.io/docs/components/modeler/bpmn/
 https://docs.camunda.io/docs/apis-tools/frontend-development/task-applications/task-application-architecture/
